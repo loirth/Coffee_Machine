@@ -4,7 +4,7 @@ use std::process;
 
 
 fn main() {
-    coffee_machine_animation(3);
+    call_name_animation(3);
 
     loop {
         choose_coffee();
@@ -33,7 +33,8 @@ fn move_cursor_up(layers: u16) {
 
 
 fn choose_coffee() {
-	ascii_coffee_machine("| Choose a coffee | leave |");
+	call_test_choose_coffee_animation(1);
+    ascii_coffee_machine("| Choose a coffee || Leave |");
 	println!("\n");
     loop {
         let mut user_choice: String = String::new();
@@ -44,7 +45,7 @@ fn choose_coffee() {
 
         match user_choice.as_str().to_lowercase().as_str().trim() {
             "leave" => leave(),
-            "coffee machine" => coffee_machine_animation(2),
+            "coffee machine" => call_name_animation(2),
             "latte" => print_coffee(user_choice.to_lowercase()),
             "americano" => print_coffee(user_choice.to_lowercase()),
             "capuchino" => print_coffee(user_choice.to_lowercase()),
@@ -121,24 +122,24 @@ fn print_coffee(coffee: String) {
     println!("\nHere's your {}! Bon appetit!", coffee);
     thread::sleep(time::Duration::from_millis(5000));
     clear_entire_screen();
-    coffee_machine_animation(1);
+    call_test_choose_coffee_animation(1);
     choose_coffee();
 }
 
 
 fn ascii_coffee_machine(frame: &str) {
-    let raw_str_1 = r"  _________________________________________";
-    let raw_str_2 = r" (___________   _________________________  |";
+    let raw_str_1 = r"  __________________________________________";
+    let raw_str_2 = r" (___________   __________________________  |";
     let raw_str_3 = format!("   [XXXXX]   | {} |", frame);
-    let raw_str_4 = r"             |  ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾  |";
-    let raw_str_5 = r"             |    _________    ________    |";
-    let raw_str_6 = r"    ( (      |   |  latte  |  |espresso|   |";
-    let raw_str_7 = r"     ) )     |   |americano|  | tchibo |   |";
-    let raw_str_8 = r"  .........  |   |capuchino|  | 3 in 1 |   |";
-    let raw_str_9 = r"  |       |] |   | robusta |  | doppio |   |";
-    let raw_str_10 = r"  \       /  |    ‾‾‾‾‾‾‾‾‾    ‾‾‾‾‾‾‾‾    |";
-    let raw_str_11 = r" ‗‗`-----'‗‗‗|_____________________________|";
-    let raw_str_12 = r"|__________________________________________|";
+    let raw_str_4 = r"             |  ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾  |";
+    let raw_str_5 = r"             |    _________     ________    |";
+    let raw_str_6 = r"    ( (      |   |  latte  |   |espresso|   |";
+    let raw_str_7 = r"     ) )     |   |americano|   | tchibo |   |";
+    let raw_str_8 = r"  .........  |   |capuchino|   | 3 in 1 |   |";
+    let raw_str_9 = r"  |       |] |   | robusta |   | doppio |   |";
+    let raw_str_10 = r"  \       /  |    ‾‾‾‾‾‾‾‾‾     ‾‾‾‾‾‾‾‾    |";
+    let raw_str_11 = r" ‗‗`-----'‗‗‗|______________________________|";
+    let raw_str_12 = r"|___________________________________________|";
 
     println!("{}", raw_str_1);
     println!("{}", raw_str_2);
@@ -154,54 +155,7 @@ fn ascii_coffee_machine(frame: &str) {
     println!("{}", raw_str_12);
 }
 
-fn coffee_machine_animation(mut repeat: i8) {
-
-	let animation_frames: Vec<&str> = vec!(
-		"| Coffee machine by Vlad  |",
-		"|Coffee machine by Vlad   |",
-		"|offee machine by Vlad   C|",
-		"|ffee machine by Vlad   Co|",
-		"|fee machine by Vlad   Cof|",
-		"|ee machine by Vlad   Coff|",
-		"|e machine by Vlad   Coffe|",
-		"| machine by Vlad   Coffee|",
-		"|machine by Vlad   Coffee |",
-		"|achine by Vlad   Coffee m|",
-		"|chine by Vlad   Coffee ma|",
-		"|hine by Vlad   Coffee mac|",
-		"|ine by Vlad   Coffee mach|",
-		"|ne by Vlad   Coffee machi|",
-		"|e by Vlad   Coffee machin|",
-		"| by Vlad   Coffee machine|",
-		"|by Vlad   Coffee machine |",
-		"|y Vlad   Coffee machine b|",
-		"| Vlad   Coffee machine by|",
-		"|Vlad   Coffee machine by |",
-		"|lad   Coffee machine by V|",
-		"|ad   Coffee machine by Vl|",
-		"|d   Coffee machine by Vla|",
-		"|   Coffee machine by Vlad|",
-		"|  Coffee machine by Vlad |",
-		"| Coffee machine by Vlad  |",
-		"| Coffee machine by Vlad  |",
-		"|                         |",
-		"|                         |",
-		"|                         |",
-		"| Coffee machine by Vlad  |",
-		"| Coffee machine by Vlad  |",
-		"|                         |",
-		"|                         |",
-		"|                         |",
-		"| Coffee machine by Vlad  |",
-		"| Coffee machine by Vlad  |",
-		"| Coffee machine by Vlad  |",
-		"|                         |",
-		"|                         |",
-		"|                         |",
-		"| Coffee machine by Vlad  |",
-		"| Coffee machine by Vlad  |",
-		);
-
+fn coffee_machine_animation(mut repeat: i8, animation_frames: Vec<&str>) {
 	let fps: u64 = 1000 / 60;
 
 	while repeat > 0 {
@@ -216,4 +170,156 @@ fn coffee_machine_animation(mut repeat: i8) {
 
 		repeat -= 1;
 	};
+}
+
+fn call_name_animation(repeat: i8) {
+    let animation_frames: Vec<&str> = vec!(
+        "| Coffee machine by loirth |",
+        "|Coffee machine by loirth  |",
+        "|offee machine by loirth  C|",
+        "|ffee machine by loirth  Co|",
+        "|fee machine by loirth  Cof|",
+        "|ee machine by loirth  Coff|",
+        "|e machine by loirth  Coffe|",
+        "| machine by loirth  Coffee|",
+        "|machine by loirth  Coffee |",
+        "|achine by loirth  Coffee m|",
+        "|chine by loirth  Coffee ma|",
+        "|hine by loirth  Coffee mac|",
+        "|ine by loirth  Coffee mach|",
+        "|ne by loirth  Coffee machi|",
+        "|e by loirth  Coffee machin|",
+        "| by loirth  Coffee machine|",
+        "|by loirth  Coffee machine |",
+        "|y loirth  Coffee machine b|",
+        "| loirth  Coffee machine by|",
+        "|loirth  Coffee machine by |",
+        "|oirth  Coffee machine by l|",
+        "|irth  Coffee machine by lo|",
+        "|rth  Coffee machine by loi|",
+        "|th  Coffee machine by loir|",
+        "|h  Coffee machine by loirt|",
+        "|  Coffee machine by loirth|",
+        "| Coffee machine by loirth |",
+        "| Coffee machine by loirth |",
+        "|                          |",
+        "|                          |",
+        "|                          |",
+        "| Coffee machine by loirth |",
+        "| Coffee machine by loirth |",
+        "|                          |",
+        "|                          |",
+        "|                          |",
+        "| Coffee machine by loirth |",
+        "| Coffee machine by loirth |",
+        "| Coffee machine by loirth |",
+        "|                          |",
+        "|                          |",
+        "|                          |",
+        "| Coffee machine by loirth |",
+        "| Coffee machine by loirth |",
+        );
+
+    coffee_machine_animation(repeat, animation_frames)
+}
+
+
+/*fn call_choose_coffee_animation(repeat: i8) {
+    let animation_frames: Vec<&str> = vec!(
+        "| Choose a coffee | leave |",
+        "|Choose a coffee | leave  |",
+        "|hoose a coffee | leave  C|",
+        "|oose a coffee | leave  Ch|",
+        "|ose a coffee | leave  Cho|",
+        "|se a coffee | leave  Choo|",
+        "|e a coffee | leave  Choos|",
+        "| a coffee | leave  Choose|",
+        "|a coffee | leave  Choose |",
+        "| coffee | leave  Choose a|",
+        "|coffee | leave  Choose a |",
+        "|offee | leave  Choose a c|",
+        "|ffee | leave  Choose a co|",
+        "|fee | leave  Choose a cof|",
+        "|ee | leave  Choose a coff|",
+        "|e | leave  Choose a coffe|",
+        "| | leave  Choose a coffee|",
+        "|| leave  Choose a coffee |",
+        "| leave  Choose a coffee ||",
+        "|leave  Choose a coffee | |",
+        "|eave  Choose a coffee | l|",
+        "|ave  Choose a coffee | le|",
+        "|ve  Choose a coffee | lea|",
+        "|e  Choose a coffee | leav|",
+        "|  Choose a coffee | leave|",
+        "| Choose a coffee | leave |",
+        "| Choose a coffee | leave |",
+        "| Choose a coffee | leave |",
+        "|                         |",
+        "|                         |",
+        "|                         |",
+        "| Choose a coffee | leave |",
+        "| Choose a coffee | leave |",
+        "|                         |",
+        "|                         |",
+        "|                         |",
+        "| Choose a coffee | leave |",
+        "| Choose a coffee | leave |",
+        "| Choose a coffee | leave |",
+        "|                         |",
+        "|                         |",
+        "|                         |",
+        "| Choose a coffee | leave |",
+        "| Choose a coffee | leave |",
+        );
+
+    coffee_machine_animation(repeat, animation_frames)
+} */
+
+fn call_test_choose_coffee_animation(repeat: i8) {
+    let animation_frames: Vec<&str> = vec!(
+        "| Choose a coffee || Leave |",
+        "|  Choose a coffee  Leave  |",
+        "|   Choose a coffeLeavee   |",
+        "|   Choose a coffLeaveee   |",
+        "|   Choose a cofLeavefee   |",
+        "|   Choose a coLeaveffee   |",
+        "|   Choose a cLeaveoffee   |",
+        "|   Choose a Leavecoffee   |",
+        "|   Choose aLeave coffee   |",
+        "|   Choose Leavea coffee   |",
+        "|   ChooseLeave a coffee   |",
+        "|   ChoosLeavee a coffee   |",
+        "|   ChooLeavese a coffee   |",
+        "|   ChoLeaveose a coffee   |",
+        "|   ChLeaveoose a coffee   |",
+        "|   CLeavehoose a coffee   |",
+        "|   LeaveChoose a coffee   |",
+        "|   LeaveChoose a coffee   |",
+        "|  Leave  Choose a coffee  |",
+        "| Leave   Choose a coffee  |",
+        "| Leave || Choose a coffee |",
+        "| Leave || Choose a coffee |",
+        "| Leave   Choose a coffee  |",
+        "|  Leave  Choose a coffee  |",
+        "|   LeaveChoose a coffee   |",
+        "|   LeaveChoose a coffee   |",
+        "|   CLeavehoose a coffee   |",
+        "|   ChLeaveoose a coffee   |",
+        "|   ChoLeaveose a coffee   |",
+        "|   ChooLeavese a coffee   |",
+        "|   ChoosLeavee a coffee   |",
+        "|   ChooseLeave a coffee   |",
+        "|   Choose Leavea coffee   |",
+        "|   Choose aLeave coffee   |",
+        "|   Choose a Leavecoffee   |",
+        "|   Choose a cLeaveoffee   |",
+        "|   Choose a coLeaveffee   |",
+        "|   Choose a cofLeavefee   |",
+        "|   Choose a coffLeaveee   |",
+        "|   Choose a coffeLeavee   |",
+        "|  Choose a coffee  Leave  |",
+        "| Choose a coffee || Leave |",
+        );
+
+    coffee_machine_animation(repeat, animation_frames)
 }
