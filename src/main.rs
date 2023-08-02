@@ -1,21 +1,20 @@
-#[allow(unused_imports)]
 use std::io::{self, Write};
-
-#[allow(unused_imports)]
 use std::{thread, time};
 use std::process;
 
 
 fn main() {
-    ascii_coffee_machine(); // Introduction
+    coffee_machine_animation(3);
 
     loop {
         choose_coffee();
     }
 }
 
-#[allow(dead_code)]
+
 fn leave() {
+	clear_entire_screen();
+	move_cursor_up(1000);
     println!("Goodbye, see you later!\n");
     process::exit(0);
 }
@@ -27,12 +26,17 @@ fn clear_entire_screen() {
 }
 
 
-#[allow(dead_code)]
+fn move_cursor_up(layers: u16) {
+	print!("\x1b[{}A", layers);
+	io::stdout().flush().unwrap();
+}
+
+
 fn choose_coffee() {
+	ascii_coffee_machine("| Choose a coffee | leave |");
+	println!("\n");
     loop {
         let mut user_choice: String = String::new();
-        
-        println!("\nChoose a coffee for coffee machine above, see coffee machine or leave");
 
         io::stdin()
             .read_line(&mut user_choice)
@@ -40,49 +44,17 @@ fn choose_coffee() {
 
         match user_choice.as_str().to_lowercase().as_str().trim() {
             "leave" => leave(),
-            "coffee machine" => ascii_coffee_machine(),
-            "latte" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "americano" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "capuchino" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "robusta" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "espresso" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "tchibo" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "3 in 1" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "3in1" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "3x1" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
-            "doppio" => {
-                print_coffee(user_choice.to_lowercase());
-                break;
-            },
+            "coffee machine" => coffee_machine_animation(2),
+            "latte" => print_coffee(user_choice.to_lowercase()),
+            "americano" => print_coffee(user_choice.to_lowercase()),
+            "capuchino" => print_coffee(user_choice.to_lowercase()),
+            "robusta" => print_coffee(user_choice.to_lowercase()),
+            "espresso" => print_coffee(user_choice.to_lowercase()),
+            "tchibo" => print_coffee(user_choice.to_lowercase()),
+            "3 in 1" => print_coffee(user_choice.to_lowercase()),
+            "doppio" => print_coffee(user_choice.to_lowercase()),
             _ => {
-                println!("Invalid function. Please try again!");
+                println!("We don't have this coffee. Please try again!");
                 continue;
             },
         }
@@ -94,6 +66,8 @@ fn choose_coffee() {
 // ASCII Arts
 
 fn ascii_coffee() {
+	clear_entire_screen();
+	move_cursor_up(1000);
     let raw_str_1 = r"                        (";
     let raw_str_2 = r"                          )     (";
     let raw_str_3 = r"                   ___...(-------)-....___";
@@ -144,17 +118,18 @@ fn ascii_coffee() {
 #[allow(dead_code)]
 fn print_coffee(coffee: String) {
     ascii_coffee();
-    println!("\nHere's your {}. Bon appetit!", coffee);
+    println!("\nHere's your {}! Bon appetit!", coffee);
     thread::sleep(time::Duration::from_millis(5000));
     clear_entire_screen();
-    ascii_coffee_machine();
+    coffee_machine_animation(1);
+    choose_coffee();
 }
 
 
-fn ascii_coffee_machine() { // I make it in different variables to simplify modifications in future and better readability
+fn ascii_coffee_machine(frame: &str) {
     let raw_str_1 = r"  _________________________________________";
     let raw_str_2 = r" (___________   _________________________  |";
-    let raw_str_3 = r"   [XXXXX]   | | Coffee machine by Vlad  | |";
+    let raw_str_3 = format!("   [XXXXX]   | {} |", frame);
     let raw_str_4 = r"             |  ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾  |";
     let raw_str_5 = r"             |    _________    ________    |";
     let raw_str_6 = r"    ( (      |   |  latte  |  |espresso|   |";
@@ -179,36 +154,66 @@ fn ascii_coffee_machine() { // I make it in different variables to simplify modi
     println!("{}", raw_str_12);
 }
 
+fn coffee_machine_animation(mut repeat: i8) {
 
+	let animation_frames: Vec<&str> = vec!(
+		"| Coffee machine by Vlad  |",
+		"|Coffee machine by Vlad   |",
+		"|offee machine by Vlad   C|",
+		"|ffee machine by Vlad   Co|",
+		"|fee machine by Vlad   Cof|",
+		"|ee machine by Vlad   Coff|",
+		"|e machine by Vlad   Coffe|",
+		"| machine by Vlad   Coffee|",
+		"|machine by Vlad   Coffee |",
+		"|achine by Vlad   Coffee m|",
+		"|chine by Vlad   Coffee ma|",
+		"|hine by Vlad   Coffee mac|",
+		"|ine by Vlad   Coffee mach|",
+		"|ne by Vlad   Coffee machi|",
+		"|e by Vlad   Coffee machin|",
+		"| by Vlad   Coffee machine|",
+		"|by Vlad   Coffee machine |",
+		"|y Vlad   Coffee machine b|",
+		"| Vlad   Coffee machine by|",
+		"|Vlad   Coffee machine by |",
+		"|lad   Coffee machine by V|",
+		"|ad   Coffee machine by Vl|",
+		"|d   Coffee machine by Vla|",
+		"|   Coffee machine by Vlad|",
+		"|  Coffee machine by Vlad |",
+		"| Coffee machine by Vlad  |",
+		"| Coffee machine by Vlad  |",
+		"|                         |",
+		"|                         |",
+		"|                         |",
+		"| Coffee machine by Vlad  |",
+		"| Coffee machine by Vlad  |",
+		"|                         |",
+		"|                         |",
+		"|                         |",
+		"| Coffee machine by Vlad  |",
+		"| Coffee machine by Vlad  |",
+		"| Coffee machine by Vlad  |",
+		"|                         |",
+		"|                         |",
+		"|                         |",
+		"| Coffee machine by Vlad  |",
+		"| Coffee machine by Vlad  |",
+		);
 
-/*
-fn ascii_name() {
-    let raw_str_1 = r" _______  _______  _______  _______  _______  _______    _______  _______  _______          _________ _        _______ ";
-    let raw_str_2 = r"(  ____ \(  ___  )(  ____ \(  ____ \(  ____ \(  ____ \  (       )(  ___  )(  ____ \|\     /|\__   __/( (    /|(  ____ \";
-    let raw_str_3 = r"| (    \/| (   ) || (    \/| (    \/| (    \/| (    \/  | () () || (   ) || (    \/| )   ( |   ) (   |  \  ( || (    \/";
-    let raw_str_4 = r"| |      | |   | || (__    | (__    | (__    | (__      | || || || (___) || |      | (___) |   | |   |   \ | || (__    ";
-    let raw_str_5 = r"| |      | |   | ||  __)   |  __)   |  __)   |  __)     | |(_)| ||  ___  || |      |  ___  |   | |   | (\ \) ||  __)   ";
-    let raw_str_6 = r"| |      | |   | || (      | (      | (      | (        | |   | || (   ) || |      | (   ) |   | |   | | \   || (      ";
-    let raw_str_7 = r"| (____/\| (___) || )      | )      | (____/\| (____/\  | )   ( || )   ( || (____/\| )   ( |___) (___| )  \  || (____/\";
-    let raw_str_8 = r"(_______/(_______)|/       |/       (_______/(_______/  |/     \||/     \|(_______/|/     \|\_______/|/    )_)(_______/";
-    println!("{}", raw_str_1);
-    println!("{}", raw_str_2);
-    println!("{}", raw_str_3);
-    println!("{}", raw_str_4);
-    println!("{}", raw_str_5);
-    println!("{}", raw_str_6);
-    println!("{}", raw_str_7);
-    println!("{}", raw_str_8);
+	let fps: u64 = 1000 / 60;
+
+	while repeat > 0 {
+		for frame in animation_frames.iter() {
+			for _i in 0..4 {   // without that animation will be very fast, but if we change fps to 30 it will look bad
+				ascii_coffee_machine(frame);
+				thread::sleep(time::Duration::from_millis(fps));
+				clear_entire_screen();
+				move_cursor_up(1000);
+			};
+		};
+
+		repeat -= 1;
+	};
 }
-
-
-fn loading_animation() {
-    println!("Loading...");
-    for i in 0..101 {
-        thread::sleep(time::Duration::from_millis(100));
-        print!("\x1b[1000D {}%", i.to_string());
-        io::stdout().flush().unwrap();
-    }
-    print!("\x1b[1A \x1b[1000D Loading completed!");
-}
-*/
